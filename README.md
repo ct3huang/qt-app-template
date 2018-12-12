@@ -5,9 +5,9 @@ use the same `mainwindow.ui` file, created in QtDesigner.
 
 ## C++
 
-The C++ project uses cmake. Change the line
+The C++ project uses cmake. In the file `{project_dir}/cpp/CMakeList.txt` change the line
 ```cmake
-find_package(Qt5Widgets PATHS ../../lib/Qt5.11.2/5.11.2/clang_64)
+find_package(Qt5Widgets PATHS ../../../lib/Qt5.11.2/5.11.2/clang_64)
 ```
 to the path where the Qt5 library is installed on your computer.
 
@@ -15,9 +15,9 @@ to the path where the Qt5 library is installed on your computer.
 
 Install pyside2 in your virtual environment. 
 
-To convert mainwindow.ui file into a python source file, run:
+To convert mainwindow.ui file into a python source file, run from the `{project_dir}/py` folder:
 ```bash
-$ pyside2-uic ./ui/mainwindow.ui > src/ui_mainwindow.py 
+$ pyside2-uic ./ui/mainwindow.ui > ./src/ui_mainwindow.py 
 ``` 
 
 Run the project with:
