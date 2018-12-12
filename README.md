@@ -17,7 +17,7 @@ Install pyside2 in your virtual environment.
 
 To convert mainwindow.ui file into a python source file, run from the `{project_dir}/py` folder:
 ```bash
-$ pyside2-uic ./ui/mainwindow.ui > ./src/ui_mainwindow.py 
+pyside2-uic ./ui/mainwindow.ui > ./src/ui_mainwindow.py 
 ``` 
 
 Run the project with:
