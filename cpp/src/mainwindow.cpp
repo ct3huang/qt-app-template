@@ -7,19 +7,19 @@
 
 #include <QtWidgets>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow)
-{
+MainWindow::MainWindow(QWidget *parent)
+        : QMainWindow(parent), ui(new Ui::MainWindow) {
+
     ui->setupUi(this);
     // Connect button signal to appropriate slot
     connect(ui->myButton, SIGNAL (released()), this, SLOT (myButtonPushed()));
 }
 
-MainWindow::~MainWindow() {
-    delete ui;
-}
-
 void MainWindow::myButtonPushed() {
     ui->myTextEdit->append("Lorum ipsum");
+}
+
+MainWindow::~MainWindow() {
+    delete ui;
 }
 
