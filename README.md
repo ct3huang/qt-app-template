@@ -9,7 +9,7 @@ use the same `mainwindow.ui` file, created in QtDesigner.
 
 Design your app in QtDesigner. In the `Property Editor -> Object -> objectName`, give every object a useful name. This is the variable name that refers to the widget in the code.
 
-![QtDesigner](/Users/gilbert/Development/git/qt-app-template/resources/qtdesigner.png)
+![QtDesigner](./resources/qtdesigner.png)
 
 ## C++
 
