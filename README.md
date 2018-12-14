@@ -38,4 +38,4 @@ python main.py
 
 The final result will look like below:
 
-![Screenshot of myApp](/Users/gilbert/Development/git/qt-app-template/resources/myapp.png)
+![Screenshot of myApp](./resources/myapp.png)
