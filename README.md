@@ -3,7 +3,7 @@
 # Minimal Qt App in C++ and Python
 
 This project shows the similarity between a Qt app, written in C++ and Python. Both implementations
-use the same `mainwindow.ui` file, created in QtDesigner.
+use the same `mainwindow.ui` file, created in QtDesigner. Save the file in `*.ui` format.
 
 ## QtDesigner
 
