@@ -1,7 +1,15 @@
+
+
 # Minimal Qt App in C++ and Python
 
 This project shows the similarity between a Qt app, written in C++ and Python. Both implementations
 use the same `mainwindow.ui` file, created in QtDesigner.
+
+## QtDesigner
+
+Design your app in QtDesigner. In the `Property Editor -> Object -> objectName`, give every object a useful name. This is the variable name that refers to the widget in the code.
+
+![QtDesigner](/Users/gilbert/Development/git/qt-app-template/resources/qtdesigner.png)
 
 ## C++
 
@@ -18,10 +26,16 @@ Install pyside2 in your virtual environment.
 To convert mainwindow.ui file into a python source file, run from the `{project_dir}/py` folder:
 ```bash
 pyside2-uic ./ui/mainwindow.ui > ./src/ui_mainwindow.py 
-``` 
+```
 
 Run the project with:
 ```bash
 cd src
 python main.py
 ```
+
+## Screenshot
+
+The final result will look like below:
+
+![Screenshot of myApp](/Users/gilbert/Development/git/qt-app-template/resources/myapp.png)
