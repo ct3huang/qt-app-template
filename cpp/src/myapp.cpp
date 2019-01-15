@@ -7,7 +7,8 @@
 
 MyApp::MyApp(int &argc, char **argv) : QApplication(argc, argv) {
 
+    setOrganizationDomain("com.mycompany");
+    setOrganizationName("My Company");
     setApplicationName("My App");
     setApplicationVersion("0.1");
-
 }
