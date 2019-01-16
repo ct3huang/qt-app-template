@@ -16,15 +16,9 @@ export CODE_SIGN_IDENTITY="Developer ID Application: Your Name (XXXXXXXXXX)"
 
 ## Code signing
 
-Code signing in the console can be done with:
-
-```bash
-codesign --deep --force --verify  --verbose  --options runtime \
-   --sign ${CODE_SIGN_IDENTITY} cmake-build-debug/myApp.app
-```
-
-where `--option runtime` is for hardening runtime, required in the near future for all macOS apps. The option `--deep`
-is used to sign all frameworks and libraries that are included in the app bundle.
+Code signing is taken care of automatically when building a Release (not in Debug build mode). The script that is 
+invoked by cmake is located in `resources/macOS/post_build_codesign.sh`. To run successfully, the script needs the
+shell environment variable `CODE_SIGN_IDENTITY` been set.
 
 
 ## Troubleshooting
