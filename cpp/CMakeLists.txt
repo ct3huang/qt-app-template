@@ -1,12 +1,14 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.12)
 
 PROJECT(myApp)
+set(APP_NAME myApp)
 
 set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt5Widgets PATHS ../../../lib/Qt5.12.0/5.12.0/clang_64)
+set(QT_PATH ../../../lib/Qt5.12.0/5.12.0/clang_64)
+find_package(Qt5Widgets PATHS ${QT_PATH})
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -16,6 +18,7 @@ set(CMAKE_AUTORCC ON)
 # macOS app bundle settings
 
 if (APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
     # Location for the info.plist template
     set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS")
     # app icon
@@ -36,9 +39,24 @@ set(SOURCES
 # compiling and linking
 
 if (APPLE)
-    add_executable(myApp MACOSX_BUNDLE ${ICNS_FILE_PATH} ${SOURCES})
+    add_executable(${APP_NAME} MACOSX_BUNDLE ${ICNS_FILE_PATH} ${SOURCES})
 else ()
-    add_executable(myApp ${SOURCES})
+    add_executable(${APP_NAME} ${SOURCES})
 endif ()
 
-target_link_libraries(myApp Qt5::Widgets)
+target_link_libraries(${APP_NAME} Qt5::Widgets)
+
+#-----------------------------------------------------------------------------------------------------------------------
+# post installation
+
+message(STATUS ${QT_PATH}/bin/macdeployqt)
+if (APPLE)
+    add_custom_command(TARGET ${APP_NAME}
+            POST_BUILD
+            COMMAND macdeployqt ARGS ${CMAKE_CURRENT_BINARY_DIR}/${APP_NAME}.app)
+
+
+
+
+endif ()
+
