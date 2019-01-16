@@ -16,7 +16,6 @@ set(CMAKE_AUTORCC ON)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # macOS app bundle settings
-
 if (APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 
@@ -54,8 +53,12 @@ target_link_libraries(${APP_NAME} Qt5::Widgets)
 # post installation
 
 if (APPLE)
-    add_custom_command(TARGET ${APP_NAME}
-            POST_BUILD
-            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS/post_build.sh ARGS ${APP_BUNDLE_PATH})
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND macdeployqt ARGS ${APP_BUNDLE_PATH})
+
+    # Do code signing when building Release only, not for Debug mode.
+    if (CMAKE_BUILD_TYPE MATCHES Release)
+        add_custom_command(TARGET ${APP_NAME} POST_BUILD
+                COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS/post_build_codesign.sh ARGS ${APP_BUNDLE_PATH})
+    endif ()
 endif ()
 
