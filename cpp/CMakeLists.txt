@@ -19,9 +19,13 @@ set(CMAKE_AUTORCC ON)
 
 if (APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
-    # Location for the info.plist template
+
+    set(APP_BUNDLE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${APP_NAME}.app)
+
+    # Set the location of the info.plist template
     set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS")
-    # app icon
+
+    # Set the source and destination location of the app icon
     set(ICNS_FILE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS/icon.icns")
     set_source_files_properties(${ICNS_FILE_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif ()
@@ -49,14 +53,9 @@ target_link_libraries(${APP_NAME} Qt5::Widgets)
 #-----------------------------------------------------------------------------------------------------------------------
 # post installation
 
-message(STATUS ${QT_PATH}/bin/macdeployqt)
 if (APPLE)
     add_custom_command(TARGET ${APP_NAME}
             POST_BUILD
-            COMMAND macdeployqt ARGS ${CMAKE_CURRENT_BINARY_DIR}/${APP_NAME}.app)
-
-
-
-
+            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS/post_build.sh ARGS ${APP_BUNDLE_PATH})
 endif ()
 
