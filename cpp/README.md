@@ -9,7 +9,8 @@ use this to set CODE_SIGN_IDENTITY for signing the app. Put the following lines 
 
 ```bash
 # Qt
-export PATH=${HOME}/Development/lib/Qt5.12.0/5.12.0/clang_64/bin:${PATH}
+export QT_LIBRARY_PATH=${HOME}/Development/lib/Qt5.12.0/5.12.0/clang_64
+export PATH=${QT_LIBRARY_PATH}/bin:${PATH}
 export CODE_SIGN_IDENTITY="Developer ID Application: Your Name (XXXXXXXXXX)"
 ```
 

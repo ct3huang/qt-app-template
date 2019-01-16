@@ -13,11 +13,21 @@ Design your app in QtDesigner. In the `Property Editor -> Object -> objectName`,
 
 ## C++
 
-The C++ project uses cmake. In the file `{project_dir}/cpp/CMakeList.txt` change the line
-```cmake
-find_package(Qt5Widgets PATHS ../../../lib/Qt5.11.2/5.11.2/clang_64)
+The C++ project uses cmake and needs to know the location of the Qt library on your computer. For example, set the 
+following shell environment variables pointing to the right location:
+
+```bash
+# Qt
+export QT_LIBRARY_PATH=${HOME}/Development/lib/Qt5.12.0/5.12.0/clang_64
+export PATH=${QT_LIBRARY_PATH}/bin:${PATH}
 ```
-to the path where the Qt5 library is installed on your computer.
+
+In the file `{project_dir}/cpp/CMakeList.txt` it gets referenced as
+```cmake
+find_package(Qt5Widgets PATHS $ENV{QT_LIBRARY_PATH})
+```
+Please look in [cpp/README.md](cpp/README.md) for more specifics about the C++ build and building macOS bundles with
+code signing.
 
 ## Python
 
@@ -39,8 +49,3 @@ python main.py
 The final result will look like below:
 
 ![Screenshot of myApp](./resources/myapp.png)
-
-## macOS C++
-
-The `CMakeLists.txt` file now contains additional code that creates a nice macOS app bundle and takes care of code
-signing. 

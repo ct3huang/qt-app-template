@@ -7,8 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(QT_PATH ../../../lib/Qt5.12.0/5.12.0/clang_64)
-find_package(Qt5Widgets PATHS ${QT_PATH})
+find_package(Qt5Widgets PATHS $ENV{QT_LIBRARY_PATH})
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
