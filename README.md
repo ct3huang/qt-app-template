@@ -39,3 +39,8 @@ python main.py
 The final result will look like below:
 
 ![Screenshot of myApp](./resources/myapp.png)
+
+## macOS C++
+
+The `CMakeLists.txt` file now contains additional code that creates a nice macOS app bundle and takes care of code
+signing. 
