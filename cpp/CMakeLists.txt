@@ -6,6 +6,11 @@ set(APP_NAME myApp)
 set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_MODULES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+
+
+# ============================================================================
+# ------------------------------ Qt settings ---------------------------------
 
 find_package(Qt5Widgets PATHS $ENV{QT_LIBRARY_PATH})
 
@@ -13,23 +18,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-#-----------------------------------------------------------------------------------------------------------------------
-# macOS app bundle settings
-if (APPLE)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 
-    set(APP_BUNDLE_PATH ${CMAKE_CURRENT_BINARY_DIR}/${APP_NAME}.app)
-
-    # Set the location of the info.plist template
-    set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS")
-
-    # Set the source and destination location of the app icon
-    set(ICNS_FILE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS/icon.icns")
-    set_source_files_properties(${ICNS_FILE_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-endif ()
-
-#-----------------------------------------------------------------------------------------------------------------------
-# sources
+# ============================================================================
+# ------------------------------ Sources -------------------------------------
 
 set(SOURCES
         src/main.cpp
@@ -37,27 +28,21 @@ set(SOURCES
         src/mainwindow.cpp
         )
 
-#-----------------------------------------------------------------------------------------------------------------------
-# compiling and linking
+# ============================================================================
+# ------------------------------ Platform specific modules -------------------
 
-if (APPLE)
-    add_executable(${APP_NAME} MACOSX_BUNDLE ${ICNS_FILE_PATH} ${SOURCES})
+if (APPLE) # Apple is a Unix, too. So dont ask only first UNIX
+    include(${CMAKE_MODULES_PATH}/CMakeConfigApple.cmake)
+elseif (UNIX)
+    include(${CMAKE_MODULES_PATH}/CMakeConfigUnix.cmake)
+elseif (WIN32)
+    include(${CMAKE_MODULES_PATH}/CMakeConfigWindows.cmake)
 else ()
-    add_executable(${APP_NAME} ${SOURCES})
+    message(FATAL_ERROR "Operating System not supported")
 endif ()
 
-target_link_libraries(${APP_NAME} Qt5::Widgets)
 
-#-----------------------------------------------------------------------------------------------------------------------
-# post installation
 
-if (APPLE)
-    add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND macdeployqt ARGS ${APP_BUNDLE_PATH})
 
-    # Do code signing when building Release only, not for Debug mode.
-    if (CMAKE_BUILD_TYPE MATCHES Release)
-        add_custom_command(TARGET ${APP_NAME} POST_BUILD
-                COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS/post_build_codesign.sh ARGS ${APP_BUNDLE_PATH})
-    endif ()
-endif ()
+
 
