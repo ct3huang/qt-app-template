@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#
+# The variable CODE_SIGN_IDENTITY should be set in your shell environment.
+#
 
 APP_BUNDLE_PATH=$1
 
