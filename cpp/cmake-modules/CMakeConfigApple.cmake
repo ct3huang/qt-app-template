@@ -1,5 +1,5 @@
 # ============================================================================
-# ------------------------------ Compiler Flags ------------------------------
+# ------------------------------ Compiler and App Bundle Flags ---------------
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 set(CMAKE_OSX_ARCHITECTURES x86_64)
@@ -23,25 +23,22 @@ target_link_libraries(
         Qt5::Widgets
 )
 
-
 # ============================================================================
 # ------------------------------ Post build ----------------------------------
 
-
-# Add Qt dynamic libraries to the app bundle
-add_custom_command(TARGET ${APP_NAME}
-        POST_BUILD
-        COMMAND macdeployqt
-        ARGS ${APP_BUNDLE_PATH}
-        )
-
-# Do code signing when building a Release. Skip code signing in Debug mode.
 if (CMAKE_BUILD_TYPE MATCHES Release)
 
+    # Add Qt dynamic libraries to the app bundle
+    add_custom_command(TARGET ${APP_NAME}
+            POST_BUILD
+            COMMAND macdeployqt
+            ARGS ${APP_BUNDLE_PATH}
+            )
+
+    # Code signing
     add_custom_command(TARGET ${APP_NAME}
             POST_BUILD
             COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/resources/macOS/post_build_codesign.sh
             ARGS ${APP_BUNDLE_PATH}
             )
-
 endif ()
